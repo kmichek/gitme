@@ -1,7 +1,15 @@
-{{page-title "Gitme"}}
-
-{{!-- The following component displays Ember's default welcome message. --}}
-<WelcomePage />
-{{!-- Feel free to remove this! --}}
+<Application />
+<div class="ember-view">
+  <div style="padding-top:5px; padding-left:4px;">
+    <BsNav @type="tabs" @justified={{false}} @stacked={{false}} @fill={{false}} as |nav|>
+      <nav.item><nav.link-to @route="browse">Browse</nav.link-to></nav.item>
+      <nav.item><nav.link-to @route="files">Files</nav.link-to></nav.item>
+      <nav.item><nav.link-to @route="repos">Repos</nav.link-to></nav.item>
+    </BsNav>
+  </div>
 
 {{outlet}}
+
+</div>
+
+<EmberNotify @messageStyle="bootstrap" @closeAfter={{4000}} />

@@ -1,0 +1,75 @@
+<div class="navigator" >
+	<div style="padding-top:20px; padding-left:20px; padding-right:20px;">
+		<BsForm @formLayout="vertical" onSubmit={{action "search"}} as |form|>
+			<form.element @label="Author" style="width: 333px;">
+				<PowerSelect @selected={{this.author}} @options={{this.authors}} @searchEnabled={{false}} @renderInPlace={{true}}
+					@onChange={{action "selectAuthor"}} as |author|>
+						{{author}}
+				</PowerSelect>
+			</form.element>
+			<div class="row" style="padding-left:10px;">
+				<div>
+					<form.element @label="From date" style="width: 100px;">
+						<EmberFlatpickr
+							@allowInput="true"
+							@autocomplete="none"
+							@dateFormat="d.m.Y"
+							class="form-control"
+							@date={{readonly this.dateFrom}}
+							@onChange={{action "fromDateChange"}} />
+					</form.element>
+				</div>
+				<div style="padding-left:20px;">
+					<form.element @label="To date" style="width: 100px;">
+						<EmberFlatpickr
+							@allowInput="true"
+							@autocomplete="none"
+							@dateFormat="d.m.Y"
+							class="form-control"
+							@date={{readonly this.dateTo}}
+							@onChange={{action "toDateChange"}} />
+					</form.element>
+				</div>
+			</div>
+			<form.element @label="Days back" style="width: 100px;">
+				<PowerSelect @selected={{this.dayBack}} @options={{this.daysBack}} @searchEnabled={{false}} @renderInPlace={{true}}
+					@onChange={{action "selectDayBack"}} as |dayBack|>
+						{{dayBack}}
+				</PowerSelect>
+			</form.element>
+			<div class="row" style="padding-left:10px;">
+				<div style="padding-left:0px;">
+					<label for="inSearch">Search</label>
+					<Input id="inSearch" @type="text" class="form-control" @value={{this.inSearch}} style="width:330px;" />
+				</div>
+			</div>
+			<div style="padding-top:20px; padding-left:0px;">
+				<BsButton @type="success" @outline={{true}} @onClick={{action "search" }}>Search</BsButton>
+				<BsButton @type="info" @outline={{true}} @onClick={{action "cleanup" }}>Cleanup</BsButton>
+			</div>
+		</BsForm>
+	</div>
+  <table>
+    <tbody style="display: block; overflow-y: auto; overflow-x: hidden; height: 90%; padding-top: 20px; padding-left:20px;">
+      {{#each this.session.filterAuthors as |row|}}
+        <tr style="height:30px;">
+          <td>{{row}}</td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
+
+<div class="content">
+	{{#light-table this.table height="95vh" as |t| }}
+		{{t.head fixed=true }}
+		{{#t.body canSelect=true canExpand=true
+						onRowClick=(action "rowClicked")
+						rowComponent=(component "common/table-colored-row")
+						as |body| }}
+			{{#body.expanded-row as |row|}}
+				{{browse/commit/files row=row}}
+			{{/body.expanded-row}}
+		{{/t.body}}
+	{{/light-table}}
+</div>

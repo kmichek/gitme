@@ -1,0 +1,27 @@
+/* tabs: */
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+    color: #555555;
+    cursor: default;
+    background-color: $tab-color;
+    border: 1px solid $tab-color;
+    border-top-color: turquoise;
+    border-top-style: solid;
+    border-right-color: rgb(221, 221, 221);
+    border-right-style: solid;
+    border-right-width: 1px;
+    border-bottom-color: rgb(221, 221, 221);
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-left-color: rgb(221, 221, 221);
+    border-left-style: solid;
+    border-left-width: 1px;
+}
+
+.nav-tabs .nav-item {
+    margin-left: 2px;
+}
+
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+    border-top-color: turquoise;
+}

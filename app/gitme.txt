@@ -1,0 +1,3 @@
+Github: https://github.com/kmichek/gitme
+git remote add origin https://github.com/kmichek/gitme.git
+git push -u origin master

@@ -1,0 +1,125 @@
+.ember-light-table,
+body,
+html {
+  font-family: 'Open Sans', sans-serif;
+}
+
+.ember-light-table {
+  width: 100%;
+  /* margin: 0 auto; */
+  border-collapse: collapse;
+}
+
+.ember-light-table .multi-select {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.ember-light-table tfoot .lt-column {
+  border-top: 1px solid #DADADA;
+}
+
+.ember-light-table thead .lt-column {
+  border-bottom: 1px solid #DADADA;
+}
+
+.ember-light-table tfoot th.is-dragging,
+.ember-light-table thead th.is-dragging {
+  opacity: 0.75;
+  background: #eee;
+}
+
+.ember-light-table tfoot th.is-drag-target.drag-right,
+.ember-light-table thead th.is-drag-target.drag-right {
+  border-right: 1px dotted #DADADA;
+}
+
+.ember-light-table tfoot th.is-drag-target.drag-left,
+.ember-light-table thead th.is-drag-target.drag-left {
+  border-left: 1px dotted #DADADA;
+}
+
+.ember-light-table .lt-column {
+  font-weight: normal; /* karlik 200; */
+  font-size: 12px;
+  font-family: Tahoma; /* karlik */
+  padding: 10px;
+}
+
+.ember-light-table .lt-column .lt-sort-icon {
+  width: 15px;
+}
+
+.ember-light-table .lt-column.lt-group-column {
+  border: none !important;
+  padding-bottom: 10px;
+}
+
+.ember-light-table .lt-column .lt-column-resizer {
+  border-right: 1px dashed #ccc;
+  border-left: 1px dashed #ccc;
+}
+
+.ember-light-table .lt-row {
+  /* height: 50px; */
+  height: 35px !important; /* Karlik 39px; */ /* 0.24 */
+}
+
+.ember-light-table .lt-row.is-selected {
+  background-color: #DEDEDE;
+}
+
+.ember-light-table .lt-row:not(.is-selected):hover {
+  background-color: #F5F4F4;
+}
+
+.ember-light-table .lt-row:last-of-type td {
+  border-bottom-width: 0;
+}
+
+.ember-light-table .lt-row.lt-expanded-row:hover,
+.ember-light-table .lt-row.lt-no-data:hover {
+  background-color: transparent;
+}
+
+.ember-light-table .lt-row.lt-expanded-row td,
+.ember-light-table .lt-row.lt-no-data td {
+  padding: 0px;
+}
+
+/* karlik: padding: 15px */
+.ember-light-table .lt-row.colored-row {
+  color: #fff;
+}
+
+/* karlik */
+.ember-light-table .lt-row.colored-row:hover {
+  /* opacity: .8; */
+  background-color: #ffffe6 !important;
+}
+
+/* karlik */
+.ember-light-table .lt-row.colored-row.is-highlighted {
+  background-color: #ffff99 !important;
+}
+
+/* karlik: DADADA; border-width: 0 0 1px; border-style: solid; */
+.ember-light-table .lt-row td {
+  border-color: #f2f2f2;
+  border-width: 0 0 1px;
+  border-style: solid;
+  /* font-size: 13px; karlik */
+  font-size: 12px !important; /* 0.24 */
+  /* padding: 0 10px; */
+  padding-top: 0px;
+  padding-right: 0px;
+  padding-bottom: 0px;
+  /* padding-left: 10px; */
+}
+.row {
+    margin-left: -10px;
+    margin-right: -10px;
+}

@@ -1,0 +1,24 @@
+.ember-power-select-trigger {
+  position: relative;
+  border-top: 1px solid #cccccc;
+  border-bottom: 1px solid #cccccc;
+  border-right: 1px solid #cccccc;
+  border-left: 1px solid #cccccc;
+  border-radius: 4px;
+  background-color: #ffffff;
+  line-height: 2.4em;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  min-height: 2.4em;
+  user-select: none;
+  -webkit-user-select: none;
+  color: inherit;
+  outline: none;
+}
+
+.ember-power-select-options[role="listbox"] {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  /* height: 200px; */
+  max-height: 450px;
+}

@@ -1,0 +1,9 @@
+<div id="boxshadow" style="width:99%; height:300px; overflow-y:auto; overflow-x:hidden; display:block; float:left; top:2px; left:4px;">
+  <div style="height:100%; padding-left:88px;">
+    {{#light-table table height="auto" as |t|}}
+      {{#t.body canSelect=true
+                as |body| }}
+      {{/t.body}}
+    {{/light-table}}
+  </div>
+</div>
