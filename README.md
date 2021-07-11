@@ -1,10 +1,10 @@
 # gitme
 
 gitme is a study JavaScript + Ember + Git + Electron application.
-* [Read local Git repository]
-* [Filter commits by author, date from / date to]
-* [Search text in commit subjects and file names]
-* [Prepare 4 lists of components for Salesforce change set deployment: classes, pages, components and others]
+* Read local Git repository
+* Filter commits by author, date from / date to
+* Search text in commit subjects and file names
+* Prepare 4 lists of components for Salesforce change set deployment: classes, pages, components and others
 
 ## Prerequisites
 
