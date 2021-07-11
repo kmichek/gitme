@@ -106,7 +106,7 @@ export default class FilesComps extends Component {
 		this.dateTo = null;
     this.dayBack = dayBack;
 		let fromDate = moment(new Date()).subtract(dayBack, 'days');
-    this.table = Table.create({columns: this.columns, rows: this.session.filter(this.author, fromDate, new Date())});
+    this.reload(fromDate, new Date());
   }
 
 }
