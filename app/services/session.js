@@ -162,7 +162,7 @@ export default class SessionService extends Service {
 			const fs = requireNode('fs');
 			const appDatatDirPath = this.getAppDataPath()+'/gitme.txt';
 			const data = fs.readFileSync(appDatatDirPath, 'utf8');
-			this.repo = data.substring(5); // /Users/TowerArc/Development/Webstorm/WABCO-INT4-GIT/
+			this.repo = data.substring(5);
 			return this.repo;
 
 		} catch(err){
