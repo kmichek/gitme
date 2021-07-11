@@ -1,3 +1,11 @@
+
+
+ember electron:make
+
+ember electron:package
+
+https://ember-electron.js.org/docs/guides/usage
+
 Github: https://github.com/kmichek/gitme
 git remote add origin https://github.com/kmichek/gitme.git
 git push -u origin master

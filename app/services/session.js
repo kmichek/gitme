@@ -16,7 +16,6 @@ export default class SessionService extends Service {
 	@tracked repo;
 
   ignored = ['commit', 'meta.xml'];
-	PROPS_FILE = './gitme.txt';
 
   constructor() {
     super(...arguments);
@@ -25,6 +24,7 @@ export default class SessionService extends Service {
   }
 
 	async load(){
+
 		this.loadProperties();
 
 		if (this.repo){
@@ -160,7 +160,8 @@ export default class SessionService extends Service {
 	loadProperties(){
 		try {
 			const fs = requireNode('fs');
-			const data = fs.readFileSync(this.PROPS_FILE, 'utf8');
+			const appDatatDirPath = this.getAppDataPath()+'/gitme.txt';
+			const data = fs.readFileSync(appDatatDirPath, 'utf8');
 			this.repo = data.substring(5); // /Users/TowerArc/Development/Webstorm/WABCO-INT4-GIT/
 			return this.repo;
 
@@ -251,4 +252,29 @@ export default class SessionService extends Service {
     }
     return notIgnored;
   }
+
+	getAppDataPath() {
+    try {
+      const path = requireNode('path');
+
+      switch (process.platform) {
+        case "darwin": {
+          return path.join(process.env.HOME, "Library", "Application Support", "gitme");
+        }
+        case "win32": {
+          return path.join(process.env.APPDATA, "gitme");
+        }
+        case "linux": {
+          return path.join(process.env.HOME, ".gitme");
+        }
+        default: {
+          console.log("Unsupported platform!");
+          process.exit(1);
+        }
+      }
+    } catch (error){
+      console.error('getAppDataPath error: ', error);
+    }
+  }
+
 }

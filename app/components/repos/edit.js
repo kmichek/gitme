@@ -14,8 +14,6 @@ export default class ReposEdit extends Component {
 
   @tracked localGitPath = null;
 
-  PROPS_FILE = './gitme.txt';
-
   constructor() {
     super(...arguments);
 
@@ -25,15 +23,43 @@ export default class ReposEdit extends Component {
 
   @action save() {
     try {
-      const fs = requireNode('fs');
       const content = 'repo='+this.localGitPath;
-      fs.writeFileSync(this.PROPS_FILE, content);
-      this.notify.success(`Saved repo name to local file ${this.PROPS_FILE}`);
-      this.session.load();
-      this.router.transitionTo('browse');
+      let appDataFilePath = this.saveAppData(content);
+      if (appDataFilePath){
+        this.notify.success('Saved repo name to local file '+appDataFilePath);
+        this.session.load();
+        this.router.transitionTo('browse');
+
+      } else {
+        this.danger.success('Failed to save to local file '+appDataFilePath);
+      }
 
     } catch(err){
       console.log('failed to save', err);
     }
   }
+
+  //--------------------------------------
+
+  saveAppData(content) {
+    let appDataFilePath;
+    try {
+      const path = requireNode('path');
+      const appDatatDirPath = this.session.getAppDataPath();
+
+      const fs = requireNode('fs');
+      if (!fs.existsSync(appDatatDirPath)) {
+          fs.mkdirSync(appDatatDirPath);
+      }
+
+      appDataFilePath = path.join(appDatatDirPath, 'gitme.txt');
+      fs.writeFileSync(appDataFilePath, content);
+      return appDatatDirPath;
+
+    } catch (error){
+      console.error('saveAppData error: ', error);
+    }
+    return appDataFilePath;
+  }
+
 }
