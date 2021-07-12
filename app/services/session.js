@@ -19,12 +19,10 @@ export default class SessionService extends Service {
 
   constructor() {
     super(...arguments);
-		this.notify.info(`Loading Git commits...`);
 		this.load();
   }
 
-	async load(){
-
+	load(){
 		this.loadProperties();
 
 		if (this.repo){
@@ -36,6 +34,8 @@ export default class SessionService extends Service {
 			const out = spawn('git', args, spawnOpts);
 
 			this.records = this.loadAllCommits(out.stdout);
+
+			this.notify.info(`Git commits loaded`);
 
 			this.authors = this.loadAuthors(this.records);
 		}

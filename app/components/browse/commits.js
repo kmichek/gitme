@@ -34,7 +34,8 @@ export default class BrowseCommits extends Component {
 
 	constructor() {
     super(...arguments);
-		this.reload();
+		let fromDate = moment(new Date()).subtract(this.dayBack, 'days');
+    this.table = Table.create({columns: this.columns, rows: this.session.filter(this.author, fromDate, new Date())});
   }
 
 	@action cleanup() {
@@ -66,8 +67,7 @@ export default class BrowseCommits extends Component {
   }
 
 	@action reload(){
-		let fromDate = moment(new Date()).subtract(this.dayBack, 'days');
-    this.table = Table.create({columns: this.columns, rows: this.session.filter(this.author, fromDate, new Date())});
+		this.session.load();
 	}
 
 	@action rowClicked() {
