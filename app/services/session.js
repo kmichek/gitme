@@ -52,7 +52,7 @@ export default class SessionService extends Service {
         if (this.notIgnored(line)) {
           if (line.startsWith('Author:')) {
 						if (record && record.files.length==0){
-							records.pop();
+							//records.pop();
 						}
             phase = 4;
             record = {};
