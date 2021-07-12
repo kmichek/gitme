@@ -51,24 +51,30 @@ export default class SessionService extends Service {
         line = line.trim();
         if (this.notIgnored(line)) {
           if (line.startsWith('Author:')) {
+						if (record && record.files.length==0){
+							records.pop();
+						}
             phase = 4;
             record = {};
             files = [];
 						record.id = idx++;
             record.author = line.substring(7).trim();
             record.files = files;
-          }
-          if (line.startsWith('Date:')) {
+
+					} else if (line.startsWith('Date:')) {
             phase = 1;
             record.date = new Date(Date.parse(line.substring(5).trim()));
             records.push(record);
           }
           if (phase == 2) {
             record.subject = line;
+
           } else if (phase == 3) {
-						let file = {};
-						file.name = line.includes('/') ? line.substring(line.lastIndexOf('/')+1) : line;
-            files.push(file);
+						if ( ! line.startsWith('Merge: ')){
+							let file = {};
+							file.name = line.includes('/') ? line.substring(line.lastIndexOf('/')+1) : line;
+							files.push(file);
+						}
           }
           if (phase == 1) {
             phase = 2;
