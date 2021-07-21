@@ -68,6 +68,13 @@ export default class BrowseCommits extends Component {
 
 	@action reload(){
 		this.session.load();
+
+		this.inSearch = null;
+		this.dateFrom = null;
+		this.dateTo = null;
+    this.dayBack = 10;
+		let fromDate = moment(new Date()).subtract(this.dayBack, 'days');
+    this.table = Table.create({columns: this.columns, rows: this.session.filter(this.author, fromDate, new Date())});
 	}
 
 	@action rowClicked() {
