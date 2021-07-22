@@ -4,8 +4,9 @@ import Service from '@ember/service';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import moment from 'moment';
+import Evented from '@ember/object/evented';
 
-export default class SessionService extends Service {
+export default class Session extends Service.extend(Evented) {
 
 	@service router;
 	@service notify;
@@ -13,6 +14,7 @@ export default class SessionService extends Service {
   @tracked records = [];
 	@tracked authors = [];
 	@tracked filterAuthors;
+	@tracked ignoreAuthors = [];
 	@tracked repo;
 
   ignored = ['commit', 'meta.xml'];
@@ -22,6 +24,10 @@ export default class SessionService extends Service {
     super(...arguments);
 		this.load();
   }
+
+	cleanAuthors(){
+		return this.authors.filter((author) => (!this.ignoreAuthors.includes(author)));
+	}
 
 	load(){
 		this.loadProperties();
@@ -173,10 +179,12 @@ export default class SessionService extends Service {
 			const config = JSON.parse(data);
 
 			this.repo = config.repo;
+			this.ignoreAuthors = config.ignoreAuthors;
+
 			return this.repo;
 
 		} catch(err){
-			this.router.transitionTo('repos');
+			this.router.transitionTo('setup');
 		}
 	}
 

@@ -1,0 +1,20 @@
+.x-toggle-component {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+
+.x-toggle-material.medium {
+  width: 4em;
+  height: 2.1em;
+  padding: 3px 3px 0 1px;
+}
+
+.x-toggle-container {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  height: auto;
+  padding: 0;
+  /* karlik: 0 0.35rem; */
+}

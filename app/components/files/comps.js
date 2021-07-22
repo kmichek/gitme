@@ -25,7 +25,7 @@ export default class FilesComps extends Component {
 
 	@tracked author;
   get authors(){
-		return this.session.authors;
+		return this.session.cleanAuthors();
   }
 
 	@tracked dateFrom = null;

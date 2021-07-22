@@ -22,7 +22,7 @@ export default class BrowseCommits extends Component {
 
 	@tracked author;
   get authors(){
-		return this.session.authors;
+		return this.session.cleanAuthors();
   }
 
 	@tracked dateFrom = null;
