@@ -11,6 +11,7 @@ import moment from 'moment';
 export default class FilesComps extends Component {
 
 	@service session;
+  @tracked inSearch;
 
   columns = [
     { label: 'Component', valuePath: 'name', 		width: '200px'},
@@ -54,12 +55,20 @@ export default class FilesComps extends Component {
     this.author = null;
 		this.dateFrom = null;
 		this.dateTo = null;
+    this.cleanupEntries(false);
 		//this.session.records = [];
 		this.session.filterAuthors = [];
   }
 
+  cleanupEntries(andDayBack){
+    this.inSearch = null;
+    if (andDayBack){
+      this.dayBack = null;
+    }
+  }
+
   @action fromDateChange(selectedDate) {
-    this.dayBack = null;
+    this.cleanupEntries(true);
 		this.dateFrom = selectedDate[0];
 		if (this.dateTo == null){
 			this.dateTo = new Date();
@@ -68,16 +77,20 @@ export default class FilesComps extends Component {
   }
 
 	@action toDateChange(selectedDate) {
-    this.dayBack = null;
+    this.cleanupEntries(true);
 		this.dateTo = selectedDate[0];
 		if (this.dateFrom != null){
 			this.reload(this.dateFrom, this.dateTo);
 		}
   }
 
-	@action reload(fromDate, toDate){
+	@action reload(fromDate, toDate, subSearch){
 
     let records = this.session.filter(this.author, fromDate, toDate);
+
+    if (subSearch){
+      records = this.subSearch(records, subSearch);
+    }
 
     let comps = this.session.loadComponents(records);
 
@@ -87,10 +100,21 @@ export default class FilesComps extends Component {
     this.tableOther = Table.create({columns: this.columns, rows: comps.other });
 	}
 
+  subSearch(records, type){
+    switch (type) {
+      case 'subject': {
+        let token = this.inSearch.toLowerCase();
+        records = records.filter(({ subject }) => subject.toLowerCase().includes(token));
+        break;
+      }
+    }
+    return records;
+  }
+
 	@action selectAuthor(author) {
+    this.cleanupEntries(false);
     this.author = author;
-		let fromDate;
-		let toDate;
+		let fromDate, toDate;
 		if (this.dayBack){
 			fromDate = moment(new Date()).subtract(this.dayBack, 'days');
 			toDate = new Date();
@@ -102,6 +126,7 @@ export default class FilesComps extends Component {
   }
 
 	@action selectDayBack(dayBack) {
+    this.cleanupEntries(false);
 		this.dateFrom = null;
 		this.dateTo = null;
     this.dayBack = dayBack;
@@ -109,4 +134,17 @@ export default class FilesComps extends Component {
     this.reload(fromDate, new Date());
   }
 
+  @action search(type) {
+		if (this.inSearch){
+      let fromDate, toDate;
+      if (this.dayBack){
+        fromDate = moment(new Date()).subtract(this.dayBack, 'days');
+        toDate = new Date();
+      } else {
+        fromDate = this.dateFrom;
+        toDate = this.dateTo;
+      }
+      this.reload(fromDate, toDate, type);
+		}
+  }
 }

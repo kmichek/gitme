@@ -13,6 +13,7 @@ export default class ReposEdit extends Component {
   @service notify;
 
   @tracked localGitPath = null;
+  @tracked ignoreAuthors = [];
 
   constructor() {
     super(...arguments);
@@ -23,8 +24,13 @@ export default class ReposEdit extends Component {
 
   @action save() {
     try {
-      const content = 'repo='+this.localGitPath;
-      let appDataFilePath = this.saveAppData(content);
+      //const content = 'repo='+this.localGitPath;
+      const config = new Object();
+      config.repo = this.localGitPath;
+      config.ignoreAuthors = this.ignoreAuthors;
+
+      //let appDataFilePath = this.saveAppData(content);
+      let appDataFilePath = this.saveAppData(JSON.stringify(config));
       if (appDataFilePath){
         this.notify.success('Saved repo name to local file '+appDataFilePath);
         this.session.load();
@@ -52,7 +58,7 @@ export default class ReposEdit extends Component {
           fs.mkdirSync(appDatatDirPath);
       }
 
-      appDataFilePath = path.join(appDatatDirPath, 'gitme.txt');
+      appDataFilePath = path.join(appDatatDirPath, this.session.CONFIG); //'gitme.json');
       fs.writeFileSync(appDataFilePath, content);
       return appDatatDirPath;
 

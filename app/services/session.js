@@ -16,6 +16,7 @@ export default class SessionService extends Service {
 	@tracked repo;
 
   ignored = ['commit', 'meta.xml'];
+	CONFIG = 'gitme.json';
 
   constructor() {
     super(...arguments);
@@ -166,9 +167,12 @@ export default class SessionService extends Service {
 	loadProperties(){
 		try {
 			const fs = requireNode('fs');
-			const appDatatDirPath = this.getAppDataPath()+'/gitme.txt';
+			const appDatatDirPath = this.getAppDataPath()+'/'+this.CONFIG;
 			const data = fs.readFileSync(appDatatDirPath, 'utf8');
-			this.repo = data.substring(5);
+
+			const config = JSON.parse(data);
+
+			this.repo = config.repo;
 			return this.repo;
 
 		} catch(err){
