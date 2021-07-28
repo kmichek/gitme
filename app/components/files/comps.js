@@ -11,6 +11,8 @@ import moment from 'moment';
 export default class FilesComps extends Component {
 
 	@service session;
+  @service notify;
+
   @tracked inSearch;
 
   columns = [
@@ -51,6 +53,18 @@ export default class FilesComps extends Component {
     document.getElementById("dvCard4").style.height = height+'px';
   }
 
+  calcFromTo(){
+    let fromDate, toDate;
+		if (this.dayBack){
+			fromDate = moment(new Date()).subtract(this.dayBack, 'days');
+			toDate = new Date();
+		} else {
+			fromDate = this.dateFrom;
+			toDate = this.dateTo;
+		}
+    return [new Date(fromDate), toDate];
+  }
+
 	@action cleanup() {
     this.author = null;
 		this.dateFrom = null;
@@ -65,6 +79,38 @@ export default class FilesComps extends Component {
     if (andDayBack){
       this.dayBack = null;
     }
+  }
+
+  @action copyToClipboard(){
+    let result = '';
+    let fromTo = this.calcFromTo();
+    let records = this.session.filter(this.author, fromTo[0], fromTo[1]);
+    let comps = this.session.loadComponents(records);
+    result += this.copyToClipboardComps(comps.classes, 'Apex Class');
+    result += this.copyToClipboardComps(comps.pages, 'Visualforce Page');
+    result += this.copyToClipboardComps(comps.compos, 'Visualforce Component');
+    result += this.copyToClipboardComps(comps.other, 'Static Resource / Other');
+    let self = this;
+    navigator.clipboard.writeText(result).then(function() {
+      self.notify.success('Components list in your clipboard');
+    }, function(e) {
+      self.notify.alert('Copy failed: '+e);
+    });
+  }
+
+  copyToClipboardComps(comps, type){
+    let result = '';
+    comps.forEach(comp =>{
+      result += comp.name +'\t' +type +'\t\t';
+      if (comp.value){
+        let tans = comp.value.split(',')
+        if (tans && tans.length > 0){
+          tans.forEach(tan => result += tan);
+        }
+      }
+      result += '\n';
+    })
+    return result;
   }
 
   @action fromDateChange(selectedDate) {
@@ -114,15 +160,8 @@ export default class FilesComps extends Component {
 	@action selectAuthor(author) {
     this.cleanupEntries(false);
     this.author = author;
-		let fromDate, toDate;
-		if (this.dayBack){
-			fromDate = moment(new Date()).subtract(this.dayBack, 'days');
-			toDate = new Date();
-		} else {
-			fromDate = this.dateFrom;
-			toDate = this.dateTo;
-		}
-    this.reload(fromDate, toDate);
+    let fromTo = this.calcFromTo();
+    this.reload(fromTo[0], fromTo[1]);
   }
 
 	@action selectDayBack(dayBack) {
@@ -136,15 +175,8 @@ export default class FilesComps extends Component {
 
   @action search(type) {
 		if (this.inSearch){
-      let fromDate, toDate;
-      if (this.dayBack){
-        fromDate = moment(new Date()).subtract(this.dayBack, 'days');
-        toDate = new Date();
-      } else {
-        fromDate = this.dateFrom;
-        toDate = this.dateTo;
-      }
-      this.reload(fromDate, toDate, type);
+      let fromTo = this.calcFromTo();
+      this.reload(fromTo[0], fromTo[1], type);
 		}
   }
 }
