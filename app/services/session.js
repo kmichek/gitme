@@ -16,6 +16,7 @@ export default class Session extends Service.extend(Evented) {
 	@tracked filterAuthors;
 	@tracked ignoreAuthors = [];
 	@tracked repo;
+	@tracked sprintStart = null;
 
   ignored = ['commit', 'meta.xml'];
 	CONFIG = 'gitme.json';
@@ -180,6 +181,7 @@ export default class Session extends Service.extend(Evented) {
 
 			this.repo = config.repo;
 			this.ignoreAuthors = config.ignoreAuthors;
+			this.sprintStart = config.sprintStart;
 
 			return this.repo;
 

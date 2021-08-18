@@ -1,18 +1,37 @@
 <div style="width: 600px;">
 	<div style="padding-top:20px; padding-left:20px; padding-right:20px;">
 		<BsForm @formLayout="vertical" as |form|>
-      <div style="padding: 0px;">
-        <label for="localGitPath">Path to local Git</label>
-        <Input id="localGitPath" @type="text" class="form-control" @value={{this.localGitPath}}/>
-      </div>
-			<div style="padding-top:20px; padding-left: 0px;">
+			<table style="width: 100%;">
+				<tr>
+					<td>
+						<div style="padding: 0px; width: 500px;">
+							<label for="localGitPath">Path to local Git</label>
+							<Input id="localGitPath" @type="text" class="form-control" @value={{this.localGitPath}}/>
+						</div>
+					</td>
+					<td>
+						<div style="padding-left: 20px; padding-top: 13px;">
+							<form.element @label="Sprint start date" style="width: 100px; ">
+								<EmberFlatpickr
+									@allowInput="true"
+									@autocomplete="none"
+									@dateFormat="d.m.Y"
+									class="form-control"
+									@date={{readonly this.sprintStart}}
+									@onChange={{action "sprintStartChange"}} />
+							</form.element>
+						</div>
+					</td>
+				</tr>
+			</table>
+			<div style="padding-top:10px; padding-left: 0px;">
 				<BsButton @type="success" @outline={{true}} @onClick={{action "save" true}}>Save</BsButton>
 			</div>
 		</BsForm>
 	</div>
 </div>
 
-<div style="padding-left: 20px; padding-top: 20px;">
+<div style="padding-left: 10px; padding-top: 20px;">
 	{{#light-table this.authorsTable height="95vh" as |t| }}
 		{{t.head fixed=true }}
 		{{#t.body canSelect=true

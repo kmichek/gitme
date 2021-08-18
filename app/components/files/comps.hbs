@@ -68,9 +68,11 @@
         <div class="card">
           <div class="card-header">{{this.tableClasses.rows.length}} classes</div>
           <div class="card-body cardBody" id="dvCard1">
-            {{#light-table this.tableClasses height="100vh" as |t| }}
-              {{#t.body canSelect=true as |body| }}{{/t.body}}
-            {{/light-table}}
+            {{#ember-scrollable}}
+              {{#light-table this.tableClasses as |t| }}
+                {{#t.body canSelect=true as |body| }}{{/t.body}}
+              {{/light-table}}
+            {{/ember-scrollable}}
           </div>
         </div>
       </div>
@@ -78,9 +80,11 @@
         <div class="card">
           <div class="card-header">{{this.tablePages.rows.length}} pages</div>
           <div class="card-body cardBody" id="dvCard2">
-            {{#light-table this.tablePages height="100vh" as |t| }}
-              {{#t.body canSelect=true as |body| }}{{/t.body}}
-            {{/light-table}}
+            {{#ember-scrollable}}
+              {{#light-table this.tablePages as |t| }}
+                {{#t.body canSelect=true as |body| }}{{/t.body}}
+              {{/light-table}}
+            {{/ember-scrollable}}
           </div>
         </div>
       </div>
@@ -90,9 +94,11 @@
         <div class="card">
           <div class="card-header">{{this.tableComps.rows.length}} components</div>
           <div class="card-body cardBody" id="dvCard3">
-            {{#light-table this.tableComps height="100vh" as |t| }}
-              {{#t.body canSelect=true as |body| }}{{/t.body}}
-            {{/light-table}}
+            {{#ember-scrollable}}
+              {{#light-table this.tableComps as |t| }}
+                {{#t.body canSelect=true as |body| }}{{/t.body}}
+              {{/light-table}}
+            {{/ember-scrollable}}
           </div>
         </div>
       </div>
@@ -100,9 +106,11 @@
         <div class="card">
           <div class="card-header">{{this.tableOther.rows.length}} other</div>
           <div class="card-body cardBody" id="dvCard4">
-            {{#light-table this.tableOther height="100vh" as |t| }}
-              {{#t.body canSelect=true as |body| }}{{/t.body}}
-            {{/light-table}}
+            {{#ember-scrollable}}
+              {{#light-table this.tableOther as |t| }}
+                {{#t.body canSelect=true as |body| }}{{/t.body}}
+              {{/light-table}}
+            {{/ember-scrollable}}
           </div>
         </div>
       </div>

@@ -67,5 +67,7 @@ body {
 }
 
 .cardBody {
-  overflow: scroll !important;
+  /* overflow: scroll !important; */
+  overflow-x: hidden;
+  overflow-y: auto;
 }

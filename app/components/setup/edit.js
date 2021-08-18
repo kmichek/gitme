@@ -16,6 +16,7 @@ export default class Edit extends Component {
 
   @tracked localGitPath = null;
   @tracked ignoreAuthors = [];
+  @tracked sprintStart = null;
 
   @tracked authorsRows = [];
   authorsColumns = [
@@ -40,6 +41,8 @@ export default class Edit extends Component {
     });
     this.authorsTable = Table.create({columns: this.authorsColumns, rows: this.authorsRows});
 
+    this.sprintStart = this.session.sprintStart;
+
     this.session.on('__setupAuthorToggled', (author, isOn) => {
       const theAuthor = this.authorsRows.find(({ name }) => name == author);
       theAuthor.include = isOn;
@@ -61,6 +64,7 @@ export default class Edit extends Component {
       const config = new Object();
       config.repo = this.localGitPath;
       config.ignoreAuthors = this.ignoreAuthors;
+      config.sprintStart = this.sprintStart;
 
       let appDataFilePath = this.saveAppData(JSON.stringify(config));
       if (appDataFilePath){
@@ -78,6 +82,11 @@ export default class Edit extends Component {
       console.log('failed to save', err);
     }
   }
+
+  @action sprintStartChange(selectedDate) {
+    this.sprintStart = selectedDate[0];
+  }
+
 
   //--------------------------------------
 
