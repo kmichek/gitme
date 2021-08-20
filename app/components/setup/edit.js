@@ -37,6 +37,9 @@ export default class Edit extends Component {
         oAuthor.name = author;
         oAuthor.include = ( ! this.session.ignoreAuthors.includes(author));
         this.authorsRows.push(oAuthor);
+        if (!oAuthor.include){
+          this.ignoreAuthors.push(author);
+        }
       }
     });
     this.authorsTable = Table.create({columns: this.authorsColumns, rows: this.authorsRows});

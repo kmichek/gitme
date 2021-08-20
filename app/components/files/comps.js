@@ -63,12 +63,21 @@ export default class FilesComps extends Component {
 
   calcFromTo(){
     let fromDate, toDate;
-		if (this.dayBack){
-			fromDate = moment(new Date()).subtract(this.dayBack, 'days');
-			toDate = new Date();
-		} else {
+    if (this.dateFrom){
 			fromDate = this.dateFrom;
-			toDate = this.dateTo;
+			if (this.dateTo){
+				toDate = this.dateTo;
+			} else {
+				toDate = new Date();
+			}
+		} else {
+			if (this.dayBack){
+				fromDate = moment(new Date()).subtract(this.dayBack, 'days');
+				toDate = new Date();
+			} else {
+				fromDate = moment(new Date()).subtract(this.dayBack, 10);
+				toDate = new Date();
+			}
 		}
     return [new Date(fromDate), toDate];
   }
